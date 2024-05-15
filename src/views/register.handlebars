@@ -1,0 +1,21 @@
+<div class="register-container">
+    <h2>Sign up</h2>
+    <form action="/api/session/register" method="post" class="register-form">
+        <input id="firstName" type="text" placeholder="First name" required>
+        <input id="lastName" type="text" placeholder="Last Name" required>
+        <input id="email" type="email" placeholder="Email" required>
+        <input id="age" type="number" placeholder="Age" required>
+        <input id="password" type="password" placeholder="Password" required>
+        <button class="submit">Sign up</button>
+        <div class="redirect-login">
+            <p>Already have an account?</p>
+            <a href="/login">Login</a>
+        </div>
+    </form>
+</div>
+{{#if failRegister}}
+  <script type="text/javascript">
+    alert('Register Failed!');
+  </script>
+{{/if}}
+<script src="/public/js/register/index.js"></script>
