@@ -1,0 +1,30 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
+
+.table-responsive{
+    display: grid;
+    grid-template-columns: repeat(3, 350px) ;
+    grid-gap: 35px;
+    padding: 20px 30px;
+}
+
+hr{
+    width: 100%;
+}
+
+h2.text-center{
+    text-align: center;
+    align-items: center; 
+    padding-top: 2px;
+}
+
+.product__img{
+    object-fit: cover !important;
+    padding: 0px !important;
+    cursor: pointer;
+}

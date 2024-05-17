@@ -14,7 +14,7 @@ router.post('/register', async (req, res) =>{
         const result = await userManager.registerUser(user);
         const cart = await cartManager.createCart();
         await userManager.createUserCart(result._id, cart._id);
-        res.redirect('/products');
+        return res.redirect("/login");
 
         //await userModel.create(req.body);
         //delete user.password;
@@ -26,24 +26,26 @@ router.post('/register', async (req, res) =>{
 });
 
 router.post("/login", async (req, res) =>{
-    try {
+   const { email, password } = req.body; 
+   try {
         req.session.failLogin = false;
-        //const { email, password } = req.body;
-        const user = await userModel.findOne({ email: req.body.email });//Busco el usuario con email: email
-
+        
+        const user = await userManager.findUserByEmail(email)//Busco el usuario con email: email
+        //console.log(user);
+        //console.log(email);
         if(!user){
             req.session.failLogin = true;
             return res.redirect("/login");
         }
 
-        if(user.password != req.body.password){
+        if(user.password != password){
             req.session.failLogin = true;
             return res.redirect("/login");
         }
 
         //delete user.password;
         req.session.user = user;
-        return res.redirect("/api/products");
+        return res.redirect("/products");
     } catch (error) {
         req.session.failLogin = true;
         res.redirect("/login");
@@ -52,20 +54,9 @@ router.post("/login", async (req, res) =>{
 });
 
 router.get('/logout', async (req, res) =>{
-    try {
-        req.session.destroy( error =>{
-            if(!error)
-                return res.send('Logout success!');
-            res.send({
-                status:'Logout ERROR',
-                body: error
-            });
-        });
-
-    } catch (error) {
-        res.status(500).send('Internal server error.');
-    }
-    
+    req.session.destroy( error =>{
+        res.redirect("/login");
+    });
 });
 
 export default router;

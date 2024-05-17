@@ -1,5 +1,10 @@
 *{
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+    box-sizing: border-box !important;
+    margin: 0 !important;
+    padding: 0 !important;
 };
+
+.logo{
+    width: 13px !important;
+    padding: 8px !important;
+}

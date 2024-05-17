@@ -1,27 +1,30 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
-  <link rel="stylesheet" href="https://fontawesome.com">
-  
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
+
   <div class="container">
-    <h1>Welcome {{#if user.admin}}Admin!{{else}} {{user.first_name}}! {{/if}}</h1>
-    <form  action="/api/session/logout" method="post">
-      <button type="submit">Logout</button>
-    </form>
-    <h2 class="text-center my-4">Products</h2>
+    <div class="user-conteiner">
+      <h1>{{user.first_name}} {{user.last_name}}</h1>
+      <p>Email: {{user.email}}</p>
+      <h4>Age: {{user.age}}</h4>
+      <h4>Role: {{user.role}}</h4>
+      <a class="logout" href="/api/session/logout">Logout</a>
+    </div>
+
+    <hr>
+    <h2 class="text-center">Products</h2>
+    <hr>
 
     <div class="row">
       <div class="col-12">
         <div class="table-responsive">
           <table id="main" class="table">
             <tbody>
-              {{#each payload}}
+              {{#each products.docs}}
                 <div class="central">
                   <div class="cntrlBox">
                     <div class="container-products" id="seccionprod">
                       <div class="products" id="{{this._id}}">
-                        <img src="public/img/{{this.thumbnails}}" class="product__img" width="400" height="430" >
+                        <img src="img/{{this.thumbnails}}" class="product__img" width="400" height="430" >
                         <div class="product-description">
                           <h3 class="product__title">{{this.title}}</h3>
                           <span class="product-price">$ {{this.price}}</span>

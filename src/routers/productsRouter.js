@@ -1,4 +1,5 @@
 import { Router } from 'express';
+//import ProductManagerFS from '../clases/ProductManagerFS.js';
 import ProductManagerDB from '../dao/ProductManagerDB.js';
 import { uploader } from '../utils/multerUtil.js';
 import productModel from '../dao/models/productModel.js';
@@ -41,10 +42,11 @@ productsRouter.get('/', async (req, res) =>{
         }
 
         const products = await productManager.getProducts(criteria, options);
+        const response = buildResponse({ ...products, category, stock });
         //const products = await productModel.paginate(criteria, options);
-        console.log(products);
-
-        res.render("products", buildResponse({ ...products, category, stock }), user);
+    
+        res.render("products", { ...response, user });
+        //res.render("products", buildResponse({ ...products, category, stock }), user);
 
     } catch (error) {
         res.status(500).send('Internal server error.');

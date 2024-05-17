@@ -1,10 +1,12 @@
 import { Server } from 'socket.io';
 import ProductManagerDB from './dao/ProductManagerDB.js';
 import CartManagerDB from './dao/CartManagerDB.js';
+import UserManagerDB from './dao/UserManagerDB.js';
 
 let io;
 const productManager = new ProductManagerDB();
 const cartManager = new CartManagerDB();
+const userManager = new UserManagerDB();
 
 export const init = (httpServer) =>{
     io = new Server(httpServer);
@@ -41,7 +43,16 @@ export const init = (httpServer) =>{
             await productManager.deleteProduct(idDelete);
             let products = await productManager.getProducts();
             io.emit('listaProductos', products.docs);
-        })
+        });
+        /*-----------USER---------*/
+        socketClient.on('registerForm', async (newUser) =>{
+            try {
+                await userManager.registerUser(newUser);
+                socketClient.emit("registrationSuccess", "Registration completed successfully!")
+            } catch (error) {
+                socketClient.emit("registratrionError", error.messages);
+            }
+        });
 
         socketClient.on('disconnect', () =>{
             console.log(`Se ha desconectado el cliente con id ${socketClient.id}`);

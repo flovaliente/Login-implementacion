@@ -4,7 +4,7 @@ class UserManagerDB{
 
     async registerUser(user){
         try {
-            if(email == 'adminCoder@coder.com' && password == 'adminCod3r123'){
+            if(user.email == 'adminCoder@coder.com' && user.password == 'adminCod3r123'){
                 const result = await userModel.create(user);
                 result.role = 'admin';
                 result.save();
@@ -27,6 +27,15 @@ class UserManagerDB{
             console.error(error.message);
         }
     }
+
+    async findUserByEmail(email) {
+        try {
+          const result = await userModel.findOne({ email: email });
+          return result;
+        } catch (error) {
+          console.error(error);
+        }
+      }
 }
 
 export default UserManagerDB;
